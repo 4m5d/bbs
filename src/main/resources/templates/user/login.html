@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>로그인</title>
+</head>
+<body>
+<form>
+    <label>
+        <span>이메일</span>
+        <input maxlength="50" name="email" placeholder="이메일" type="email">
+    </label>
+    <label>
+        <span>비밀번호</span>
+        <input maxlength="100" name="password" placeholder="비밀번호" type="password">
+    </label>
+    <input type="submit" value="로그인">
+    <a th:href="@{user/register}">회원가입</a>
+</form>
+<th:block th:replace="~{fragments/footer.html :: footer}"></th:block>
+</body>
+</html>
