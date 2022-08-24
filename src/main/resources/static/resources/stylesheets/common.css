@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+@import "reset.css";
+@import "header.css";
+@import "footer.css";
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+:root {
+    /*color*/
+    --color-background: rgb(217, 228, 221);
+    --color-partbackground: rgb(251, 247, 240);
+    --color-text: rgb(85, 85, 85);
+    --color-border: rgb(205, 201, 195);
+}
+
+html {
+    font-family: 'Nanum Gothic', sans-serif;
+    font-weight: 400;
+    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-text);
+}
