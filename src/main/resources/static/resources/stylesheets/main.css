@@ -1,17 +1,16 @@
 @charset "UTF-8";
 
 body > .main {
-    width: 60rem;
-    align-items: flex-start;
+    width: 100%;
+    align-items: center;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-
 }
 
 body > .main > .aside {
     width: 10rem;
-    height: 19rem;
+    height: 22rem;
     background-color: var(--color-partbackground);
     align-items: stretch;
     border: 0.2rem solid var(--color-border);
@@ -19,7 +18,7 @@ body > .main > .aside {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin: 12rem 0 0 2rem;
+    margin: 13rem 0 0 2rem;
     text-align: right;
     position: sticky;
 }
@@ -44,6 +43,26 @@ body > .main > .aside > .aside-list > .aside-item {
 }
 
 body > .main > .table {
-    align-items: center;
+    width: 60rem;
+    height: 19rem;
+    margin-top: 12rem;
+    margin-left: 9rem;
+}
+
+body > .main > .table > .table-title {
+    font-weight: 800;
+    font-size: 2rem;
+    text-align: left;
+    padding-bottom: 1rem;
+    padding-left: 0.5rem;
+}
+
+body > .main > .table > .thead {
+    border-bottom: 0.0625rem solid var(--color-border);
+    font-weight: 700;
+}
+
+body > .main > .table > .tbody {
+    text-align: center;
 }
 
