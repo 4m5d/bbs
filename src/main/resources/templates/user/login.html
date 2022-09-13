@@ -7,6 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>게시판 - 로그인</title>
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+    <script th:if="${loginVo != null && loginVo.getResult().name().equals('SUCCESS')}">
+        window.location.href='/';
+    </script>
+    <script th:if="${loginVo != null && loginVo.getResult().name().equals('FAILURE')}">
+        alert('이메일 혹은 비밀번호가 틀렸습니다.\n\n다시 시도해주세요.');
+        window.location.back();
+    </script>
 </head>
 <body>
 <form method="post">

@@ -10,6 +10,21 @@
         VALUES (#{email}, #{password}, #{nickname}, #{isDeleted}, #{isSuspended}, #{isAdmin})
     </insert>
 
+    <select id="selectUser"
+            parameterType="dev.yblee.mybbs.entities.UserEntity"
+            resultType="dev.yblee.mybbs.entities.UserEntity">
+        SELECT `email`          AS `email`,
+               `password`       AS `password`,
+               `nickname`       AS `nickname`,
+               `deleted_flag`   AS `isDeleted`,
+               `suspended_flag` AS `isSuspended`,
+               `admin_flag`     AS `isAdmin`
+        FROM `mybbs_member`.`users`
+        WHERE `email` = #{email}
+          AND `password` = #{password}
+        LIMIT 1
+    </select>
+
     <select id="selectCountByEmail"
             resultType="_int">
         SELECT COUNT(0)

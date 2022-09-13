@@ -21,7 +21,7 @@
     </script>
     <script th:if="${registerVo != null && registerVo.getResult().name().equals('SUCCESS')}">
         alert('회원가입에 성공하였습니다.');
-        window.location.href = '/';
+        window.location.href = 'login';
     </script>
 </head>
 <body>

@@ -1,8 +1,11 @@
 package dev.yblee.mybbs.services;
 
+import dev.yblee.mybbs.entities.UserEntity;
+import dev.yblee.mybbs.enums.LoginResult;
 import dev.yblee.mybbs.enums.RegisterResult;
 import dev.yblee.mybbs.mappers.IUserMapper;
 import dev.yblee.mybbs.utils.CryptoUtil;
+import dev.yblee.mybbs.vos.LoginVo;
 import dev.yblee.mybbs.vos.RegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,24 @@ public class UserService {
     @Autowired
     public UserService(IUserMapper userMapper) {
         this.userMapper = userMapper;
+    }
+
+    public void login(LoginVo loginVo) {
+        loginVo.setPassword(CryptoUtil.hashSha512(loginVo.getPassword()));
+        UserEntity userEntity = this.userMapper.selectUser(loginVo);
+        // userEntity가 null이면, 로그인 FAILURE
+        if (userEntity == null) {
+            loginVo.setResult(LoginResult.FAILURE);
+            return;
+        }
+        loginVo.setEmail(userEntity.getEmail());
+        loginVo.setPassword(userEntity.getPassword());
+        loginVo.setNickname(userEntity.getNickname());
+        loginVo.setDeleted(userEntity.isDeleted());
+        loginVo.setSuspended(userEntity.isSuspended());
+        loginVo.setAdmin(userEntity.isAdmin());
+        // 로그인 성공
+        loginVo.setResult(LoginResult.SUCCESS);
     }
 
     public void register(RegisterVo registerVo) {
