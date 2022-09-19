@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>게시판 - 회원가입</title>
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+    <link th:href="@{/user/stylesheets/register.css}" rel="stylesheet">
     <script th:if="${registerVo != null && registerVo.getResult().name().equals('DUPLICATE_EMAIL')}">
         alert('해당 이메일은 이미 사용 중 입니다.');
         window.history.back();
@@ -23,26 +24,34 @@
         alert('회원가입에 성공하였습니다.');
         window.location.href = 'login';
     </script>
+    <script src="https://kit.fontawesome.com/b062f4306d.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<form method="post">
-    <label>
-        <span>이메일</span>
-        <input maxlength="50" name="email" placeholder="이메일" type="email">
+<form class="register-form" method="post">
+    <a class="logo-container" th:href="@{/}">
+        <img alt="BBS" class="logo" th:src="@{/resources/images/bbs-logo.png}">
+    </a>
+    <label class="input-container">
+        <span hidden>이메일</span>
+        <i class="icon fa-solid fa-envelope"></i>
+        <input class="input" maxlength="50" name="email" placeholder="이메일" type="email">
     </label>
-    <label>
-        <span>비밀번호</span>
-        <input maxlength="100" name="password" placeholder="비밀번호" type="password">
+    <label class="input-container">
+        <span hidden>비밀번호</span>
+        <i class="icon fa-solid fa-lock"></i>
+        <input class="input" maxlength="100" name="password" placeholder="비밀번호" type="password">
     </label>
-    <label>
-        <span>비밀번호 확인</span>
-        <input maxlength="100" name="passwordCheck" placeholder="비밀번호" type="password">
+    <label class="input-container">
+        <span hidden>비밀번호 확인</span>
+        <i class="icon fa-solid fa-lock"></i>
+        <input class="input" maxlength="100" name="passwordCheck" placeholder="비밀번호 확인" type="password">
     </label>
-    <label>
-        <span>닉네임</span>
-        <input maxlength="10" name="nickname" placeholder="닉네임" type="text">
+    <label class="input-container">
+        <span hidden>닉네임</span>
+        <i class="icon fa-solid fa-user"></i>
+        <input class="input" maxlength="10" name="nickname" placeholder="닉네임" type="text">
     </label>
-    <input type="submit" value="가입하기">
+    <input class="button" type="submit" value="가입하기">
 </form>
 <th:block th:replace="~{fragments/footer.html :: footer}"></th:block>
 </body>

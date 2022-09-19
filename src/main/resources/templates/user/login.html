@@ -7,27 +7,34 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>게시판 - 로그인</title>
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+    <link th:href="@{/user/stylesheets/login.css}" rel="stylesheet">
     <script th:if="${loginVo != null && loginVo.getResult().name().equals('SUCCESS')}">
-        window.location.href='/';
+        window.location.href = '/';
     </script>
     <script th:if="${loginVo != null && loginVo.getResult().name().equals('FAILURE')}">
         alert('이메일 혹은 비밀번호가 틀렸습니다.\n\n다시 시도해주세요.');
         window.location.back();
     </script>
+    <script src="https://kit.fontawesome.com/b062f4306d.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<form method="post">
-    <label>
-        <span>이메일</span>
-        <input maxlength="50" name="email" placeholder="이메일" type="email">
+<form class="login-form" method="post">
+    <a class="logo-container" th:href="@{/}">
+        <img alt="BBS" class="logo" th:src="@{/resources/images/bbs-logo.png}">
+    </a>
+    <label class="input-container">
+        <span hidden>이메일</span>
+        <i class="icon fa-solid fa-envelope"></i>
+        <input class="input" maxlength="50" name="email" placeholder="이메일" type="email">
     </label>
-    <label>
-        <span>비밀번호</span>
-        <input maxlength="100" name="password" placeholder="비밀번호" type="password">
+    <label class="input-container">
+        <span hidden>비밀번호</span>
+        <i class="icon fa-solid fa-lock"></i>
+        <input class="input" maxlength="100" name="password" placeholder="비밀번호" type="password">
     </label>
-    <input type="submit" value="로그인">
+    <input class="button login" type="submit" value="로그인">
+    <a class="button register" th:href="@{/user/register}">회원가입</a>
 </form>
-<a th:href="@{/user/register}">회원가입</a>
 <th:block th:replace="~{fragments/footer.html :: footer}"></th:block>
 </body>
 </html>
