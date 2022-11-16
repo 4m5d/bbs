@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>게시판 - 게시글 상세</title>
+    <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+    <link th:href="@{/bbs/stylesheets/read.css}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/b062f4306d.js" crossorigin="anonymous"></script>
+    <script th:if="${session.userEntity == null}">
+        alert('로그인 후 이용해주세요.');
+        location.href = "/user/login";
+    </script>
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html :: header}"></th:block>
+<main class="main">
+    <h2 class="boardName" th:text="${bbsArticleReadVo.getBoardId()}"><!-- 게시글 제목 --></h2>
+    <ul class="category">
+        <li class="category-list"><a th:href="@{'/bbs/board/list/notice'}">공지사항</a></li>
+        <li class="category-list"><a th:href="@{'/bbs/board/list/free'}">자유게시판</a></li>
+    </ul>
+    <table class="list">
+        <thead>
+        <tr>
+            <th>제목</th>
+            <td colspan="5" th:text="${bbsArticleReadVo.getTitle()}"></td>
+        </tr>
+        <tr>
+            <th>작성자</th>
+            <td th:text="${bbsArticleReadVo.getUserNickname()}"></td>
+            <th>작성 일시</th>
+            <td th:text="${#dates.format(bbsArticleReadVo.getWrittenAt(), 'yyyy-MM-dd HH:mm')}"></td>
+            <th>조회수</th>
+            <td th:text="${bbsArticleReadVo.getView()}"></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="content" colspan="6" th:text="${bbsArticleReadVo.getContent()}"><!--내용--></td>
+        </tr>
+        <tr class="board-list">
+            <td>
+                <a class="board-button" th:href="@{'/bbs/board/list/' + ${bbsArticleReadVo.getBoardId()}}">글 목록</a>
+                <a class="board-button"
+                   th:if="${session.userEntity.getNickname() == bbsArticleReadVo.getUserNickname()}"
+                   th:href="@{/bbs/modify(articleIndex=${bbsArticleReadVo.getIndex()})}"
+                   onclick="return confirm('정말로 글을 수정할까요?')">글 수정</a>
+                <a class="board-button"
+                   th:if="${session.userEntity.getNickname() == bbsArticleReadVo.getUserNickname()}"
+                   th:href="@{/bbs/delete(articleIndex=${bbsArticleReadVo.getIndex()})}"
+                   onclick="return confirm('정말로 글을 삭제할까요?')">글 삭제</a>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td class="comment" colspan="6">
+                <form method="post" th:action="@{'/bbs/article/read/' + ${bbsArticleReadVo.getIndex()}}">
+                    <label>
+                        <span hidden>댓글 작성</span>
+                        <textarea class="comment-content" maxlength="100" name="content" placeholder="댓글 작성"></textarea>
+                    </label>
+                    <input class="comment-button" type="submit" value="작성">
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td class="comment-list" colspan="6" th:if="${bbsArticleReadVo.getComments().size() == 0}">표시할 댓글이 없습니다.
+            </td>
+        </tr>
+        <tr class="comment-line" th:each="comment : ${bbsArticleReadVo.getComments()}" th:object="${comment}">
+            <td class="comment-list" th:text="*{getUserNickname()}"><!-- 댓글작성자--></td>
+            <td colspan="3" class="comment-list" th:text="*{getContent()}"><!-- 댓글 내용--></td>
+            <td class="comment-list">
+                <span th:text="${#dates.format(comment.getWrittenAt(), 'yyyy-MM-dd HH:mm')}"><!-- 댓글 작성 일시--></span>
+            </td>
+            <td>
+                <a class="comment-delete"
+                   th:if="${session.userEntity.getNickname() == comment.getUserNickname()}"
+                   th:href="@{/bbs/deleteComment(commentIndex=${comment.getIndex()})}"
+                   onclick="return confirm('정말로 댓글을 삭제할까요?')">삭제
+                </a>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</main>
+<th:block th:replace="~{fragments/footer.html :: footer}"></th:block>
+</body>
+</html>

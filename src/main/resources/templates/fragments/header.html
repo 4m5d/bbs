@@ -2,41 +2,26 @@
 <header th:fragment="header">
     <div class="join">
         <ul class="list">
-            <li class="item" th:if="${userEntity == null}">
+            <li class="item" th:if="${session.userEntity == null}">
                 <a class="link" th:href="@{/user/login}">로그인</a>
             </li>
-            <li class="item" th:if="${userEntity == null}">
+            <li class="item" th:if="${session.userEntity == null}">
                 <a class="link" th:href="@{/user/register}">회원가입</a>
             </li>
-            <li class="item" th:if="${userEntity != null}">
-                <b class="link" th:text="${userEntity.getNickname()}"></b>
+            <li class="item" th:if="${session.userEntity != null}">
+                <b class="link" th:text="${session.userEntity.getNickname()}"></b>
                 <span>님 환영합니다.</span>
             </li>
-            <li class="item" th:if="${userEntity != null}">
+            <li class="item" th:if="${session.userEntity != null}">
                 <a class="link" th:href="@{/user/logout}">로그아웃</a>
             </li>
         </ul>
     </div>
+    <a class="logo-container" th:href="@{/}">
+        <img alt="BBS" class="logo" th:src="@{/resources/images/bbs-logo.png}">
+    </a>
     <div class="search">
-        <a class="logo-container" th:href="@{/}">
-            <img alt="BBS" class="logo" th:src="@{resources/images/bbs-logo.png}">
-        </a>
-        <form class="search-form">
-            <label class="search-standard">
-                <span hidden>검색기준</span>
-                <i class="icon fa-solid fa-magnifying-glass"></i>
-                <select class="search-criteria" name="criteria">
-                    <option value="title">제목</option>
-                    <option value="all" selected>제목 + 내용</option>
-                    <option value="writer">작성자</option>
-                </select>
-            </label>
-            <label class="keyword-input-container">
-                <span hidden>검색어</span>
-                <input class="keyword-input" maxlength="50" name="keyword" placeholder="검색어 입력" type="text">
-            </label>
-            <input class="search-button" type="submit" value="검색">
-        </form>
+
     </div>
 </header>
 </html>

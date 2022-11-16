@@ -1,68 +1,44 @@
 @charset "UTF-8";
 
+body {
+    overflow: hidden;
+}
+
 body > .main {
     width: 100%;
     align-items: center;
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-}
-
-body > .main > .aside {
-    width: 10rem;
-    height: 22rem;
-    background-color: var(--color-partbackground);
-    align-items: stretch;
-    border: 0.2rem solid var(--color-border);
-    border-radius: 1.5rem;
-    display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin: 13rem 0 0 2rem;
-    text-align: right;
-    position: sticky;
+    margin-top: 1.5rem;
+    height: 53%;
 }
 
-body > .main > .aside > h2 {
+body > .main > .welcome {
+    align-items: center;
+    margin: 4rem 0 0 2rem;
+    text-align: center;
+}
+
+body > .main > .welcome > h2 {
     font-weight: 800;
     font-size: 1.8rem;
-    text-align: left;
-    padding-top: 1rem;
-    padding-left: 0.6rem;
-}
-
-body > .main > .aside > .aside-list {
-    line-height: 2rem;
-    padding-right: 1rem;
-    padding-top: 1rem;
-}
-
-body > .main > .aside > .aside-list > .aside-item {
-    border-bottom: 0.0625rem dashed var(--color-border);
-    margin-left: 1rem;
-}
-
-body > .main > .table {
-    width: 60rem;
-    height: 19rem;
-    margin-top: 12rem;
-    margin-left: 9rem;
-}
-
-body > .main > .table > .table-title {
-    font-weight: 800;
-    font-size: 2rem;
-    text-align: left;
-    padding-bottom: 1rem;
-    padding-left: 0.5rem;
-}
-
-body > .main > .table > .thead {
-    border-bottom: 0.0625rem solid var(--color-border);
-    font-weight: 700;
-}
-
-body > .main > .table > .tbody {
     text-align: center;
+}
+
+body > .main > .welcome > p {
+    text-align: right;
+    padding-top: 1rem;
+}
+
+body > .main > .welcome > a {
+    font-weight: 700;
+    text-align: right;
+    margin-top: 1rem;
+    display: block;
+}
+
+body > .main > .welcome > a:hover {
+    color: rgb(255, 135, 135);
 }
 

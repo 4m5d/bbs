@@ -9,7 +9,6 @@ public class LoginVo extends UserEntity {
     public LoginResult getResult() {
         return this.result;
     }
-
     public void setResult(LoginResult result) {
         this.result = result;
     }

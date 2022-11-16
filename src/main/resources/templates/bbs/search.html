@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>게시판 - 게시글</title>
+    <title>게시판 - 검색 </title>
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <link th:href="@{/bbs/stylesheets/board.css}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/b062f4306d.js" crossorigin="anonymous"></script>
@@ -18,7 +18,7 @@
 <th:block th:replace="~{fragments/header.html :: header}"></th:block>
 <main class="main">
     <div class="search">
-        <form class="search-form" th:action="@{'/bbs/board/search/' + ${bbsBoardListVo.getId()}}">
+        <form class="search-form" th:action="@{'/bbs/board/search/' + ${bbsBoardSearchVo.getId()}}">
             <label class="search-category">
                 <span hidden>카테고리</span>
                 <i class="icon fa-solid fa-magnifying-glass"></i>
@@ -44,7 +44,7 @@
             <input class="search-button" type="submit" value="검색">
         </form>
     </div>
-    <h2 class="boardName" th:text="${bbsBoardListVo.getId()}"><!-- 게시판 제목(공지사항, 자유게시판 등) --></h2>
+    <h2 class="boardName" th:text="${bbsBoardSearchVo.getId()}"><!-- 게시판 제목(공지사항, 자유게시판 등) -->게시</h2>
     <ul class="category">
         <li class="category-list"><a th:href="@{'/bbs/board/list/notice'}">공지사항</a></li>
         <li class="category-list" ><a th:href="@{'/bbs/board/list/free'}">자유게시판</a></li>
@@ -60,15 +60,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:if="${bbsBoardListVo.getArticles().size() == 0}">
+        <tr th:if="${bbsBoardSearchVo.getArticles().size() == 0}">
             <!--조건 하에 표시되는 요소-->
             <td colspan="5" style="text-align: center">표시할 게시글이 없습니다.</td>
         </tr>
-        <tr th:each="article : ${bbsBoardListVo.getArticles()}" th:object="${article}"><!-- 반복되는 요소 -->
+        <tr th:each="article : ${bbsBoardSearchVo.getArticles()}" th:object="${article}"><!-- 반복되는 요소 -->
             <td class="index" th:text="*{getIndex()}"><!-- 번호 --></td>
             <td class="title"><!-- 제목 -->
-                <a th:href="@{'/bbs/article/read/' + *{getIndex()}}"
-                   th:text="${article.getTitle() + ' [' + article.getCommentCount() + ']'}"></a>
+                <a th:href="@{'/bbs/article/read/' + *{getIndex()}}" th:text="${article.getTitle() + ' [' + article.getCommentCount() + ']'}"></a>
             </td>
             <td class="nickname" th:text="*{getUserNickname()}"><!-- 작성자 --></td>
             <td class="date" th:text="*{#dates.format(getWrittenAt(), 'yyyy-MM-dd HH:mm')}"><!-- 작성 일시 --></td>
@@ -77,31 +76,30 @@
         </tbody>
         <tfoot>
         <tr>
-            <td class="write-button" colspan="5" style="text-align: right;"><a class="write" th:href="@{/bbs/write}">글
-                쓰기</a></td>
+            <td class="write-button" colspan="5" style="text-align: right;"><a class="write" th:href="@{/bbs/write}">글 쓰기</a></td>
         </tr>
-        <tr th:if="${bbsBoardListVo.getArticles().size() != 0}">
+        <tr th:if="${bbsBoardSearchVo.getArticles().size() != 0}">
             <td class="page" colspan="5" style="text-align: center;">
-                <a th:href="@{'/bbs/board/list/' + ${bbsBoardListVo.getId()} + '/' + ${bbsBoardListVo.getMinPage()}}"
-                   th:if="${bbsBoardListVo.getMinPage() < bbsBoardListVo.getRequestPage()}">&lt;&lt;</a>
+                <a th:href="@{'/bbs/board/search/' + ${bbsBoardSearchVo.getId()} + '/' + ${bbsBoardSearchVo.getMinPage()}}"
+                   th:if="${bbsBoardSearchVo.getMinPage() < bbsBoardSearchVo.getRequestPage()}">&lt;&lt;</a>
                 <!-- 조건하에 존재하는 요소 -->
-                <a th:href="@{'/bbs/board/list/' + ${bbsBoardListVo.getId()} + '/' + ${bbsBoardListVo.getRequestPage() - 1}}"
-                   th:if="${bbsBoardListVo.getMinPage() < bbsBoardListVo.getRequestPage()}">&lt;</a>
+                <a th:href="@{'/bbs/board/search/' + ${bbsBoardSearchVo.getId()} + '/' + ${bbsBoardSearchVo.getRequestPage() - 1}}"
+                   th:if="${bbsBoardSearchVo.getMinPage() < bbsBoardSearchVo.getRequestPage()}">&lt;</a>
                 <!-- 조건하에 존재하는 요소 -->
                 <th:block
-                        th:each="page : ${#numbers.sequence(bbsBoardListVo.getStartPage(), bbsBoardListVo.getEndPage())}">
-                    <a th:href="@{'/bbs/board/list/' + ${bbsBoardListVo.getId()} + '/' + ${page}}"
+                        th:each="page : ${#numbers.sequence(bbsBoardSearchVo.getStartPage(), bbsBoardSearchVo.getEndPage())}">
+                    <a th:href="@{'/bbs/board/search/' + ${bbsBoardSearchVo.getId()} + '/' + ${page}}"
                        th:text="${page}"
-                       th:if="${page != bbsBoardListVo.getRequestPage()}"></a>
+                       th:if="${page != bbsBoardSearchVo.getRequestPage()}"></a>
                     <a th:text="${page}"
-                       th:if="${page == bbsBoardListVo.getRequestPage()}"
+                       th:if="${page == bbsBoardSearchVo.getRequestPage()}"
                        style="font-weight: 700"></a>
                 </th:block>
-                <a th:href="@{'/bbs/board/list/' + ${bbsBoardListVo.getId()} + '/' + ${bbsBoardListVo.getRequestPage() + 1}}"
-                   th:if="${bbsBoardListVo.getMaxPage() > bbsBoardListVo.getRequestPage()}">&gt;</a>
+                <a th:href="@{'/bbs/board/search/' + ${bbsBoardSearchVo.getId()} + '/' + ${bbsBoardSearchVo.getRequestPage() + 1}}"
+                   th:if="${bbsBoardSearchVo.getMaxPage() > bbsBoardSearchVo.getRequestPage()}">&gt;</a>
                 <!-- 조건하에 존재하는 요소 -->
-                <a th:href="@{'/bbs/board/list/' + ${bbsBoardListVo.getId()} + '/' + ${bbsBoardListVo.getMaxPage()}}"
-                   th:if="${bbsBoardListVo.getMaxPage() > bbsBoardListVo.getRequestPage()}">&gt;&gt;</a>
+                <a th:href="@{'/bbs/board/search/' + ${bbsBoardSearchVo.getId()} + '/' + ${bbsBoardSearchVo.getMaxPage()}}"
+                   th:if="${bbsBoardSearchVo.getMaxPage() > bbsBoardSearchVo.getRequestPage()}">&gt;&gt;</a>
                 <!-- 조건하에 존재하는 요소 -->
             </td>
         </tr>

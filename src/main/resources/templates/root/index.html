@@ -13,62 +13,13 @@
 <body>
 <th:block th:replace="~{fragments/header.html :: header}"></th:block>
 <main class="main">
-    <aside class="aside">
-        <h2>Category</h2>
-        <ul class="aside-list">
-            <li class="aside-item">
-                <a class="category" href="">공지사항</a>
-            </li>
-            <li class="aside-item">
-                <a class="category" href="">자유게시판</a>
-            </li>
-        </ul>
-    </aside>
-    <table class="table">
-        <caption class="table-title">
-            최신글
-        </caption>
-        <thead class="thead">
-        <tr class="thead-list">
-            <th class="thead-item">번호</th>
-            <th class="thead-item">제목</th>
-            <th class="thead-item">작성자</th>
-            <th class="thead-item">작성 일시</th>
-            <th class="thead-item">조회수</th>
-        </tr>
-        </thead>
-        <tbody class="tbody">
-        <!--조건 하에 표시되는 요소-->
-        <!--<tr>-->
-        <!--<td>표시할 게시글이 없습니다.</td>-->
-        <!--</tr>-->
-        <tr>
-            <td>2</td>
-            <td>최신글입니다.</td>
-            <td>삐웅</td>
-            <td>2022-08-30</td>
-            <td>5</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>최신글이였습니다.</td>
-            <td>삐삐웅우쓰</td>
-            <td>2022-08-28</td>
-            <td>20</td>
-        </tr>
-        </tbody>
-        <tfoot>
-        <tr>
-            <td>
-                <a href="">1</a>
-                <a href="">2</a>
-                <a href="">3</a>
-                <a href="">4</a>
-                <a href="">5</a>
-            </td>
-        </tr>
-        </tfoot>
-    </table>
+    <div class="welcome">
+        <h2>BBS에 오신 것을 환영합니다!</h2>
+        <p th:if="${session.userEntity == null}">로그인 후, 이용해주세요</p>
+        <a th:if="${session.userEntity != null}" th:href="@{'/bbs/board/list/notice'}">공지사항</a>
+        <a th:if="${session.userEntity != null}" th:href="@{'/bbs/board/list/free'}">자유게시판</a>
+        <a th:if="${session.userEntity != null}" th:href="@{/bbs/write}">글쓰기</a>
+    </div>
 </main>
 <th:block th:replace="~{fragments/footer.html :: footer}"></th:block>
 </body>

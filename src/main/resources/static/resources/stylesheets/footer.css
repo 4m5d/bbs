@@ -1,11 +1,13 @@
+@charset "UTF-8";
+
 body > footer {
     width: 100%;
     bottom: 0;
     background-color: var(--color-partbackground);
     font-size: 0.65rem;
     font-weight: 700;
-    position: absolute;
     line-height: 1rem;
+    /*position: fixed;*/
 }
 
 body > footer > .footer-container {

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.yblee.mybbs.mappers.IBbsMapper">
+    <select id="selectArticleByIndex"
+            resultType="dev.yblee.mybbs.entities.BbsArticleEntity">
+        SELECT `index`         AS `index`,
+               `user_nickname` AS `userNickname`,
+               `board_id`      AS `boardId`,
+               `written_at`    AS `writtenAt`,
+               `title`         AS `title`,
+               `content`       AS `content`,
+               `view`          AS `view`
+        FROM `mybbs_bbs`.`articles`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </select>
+
+    <select id="selectCommentByIndex"
+            resultType="dev.yblee.mybbs.entities.BbsCommentEntity">
+        SELECT `index`         AS `index`,
+               `user_nickname` AS `userNickname`,
+               `article_index` AS `articleIndex`,
+               `written_at`    AS `writtenAt`,
+               `content`       AS `content`
+        FROM `mybbs_bbs`.`comments`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </select>
+
+    <select id="selectArticleCountTotal"
+            parameterType="dev.yblee.mybbs.entities.BbsBoardEntity"
+            resultType="_int">
+        SELECT COUNT(0)
+        FROM `mybbs_bbs`.`articles`
+        WHERE `board_id` = #{id}
+    </select>
+
+    <select id="selectArticleCountByUser"
+            resultType="_int">
+        SELECT COUNT(0)
+        FROM `mybbs_bbs`.`articles` AS `article`
+                 LEFT JOIN `mybbs_member`.`users` AS `user` ON `article`.`user_nickname` = `user`.`nickname`
+        WHERE `article`.`board_id` = #{boardId}
+          AND `user`.`nickname` = #{userNickname}
+    </select>
+
+    <select id="selectArticleCountLikeTitle"
+            resultType="_int">
+        SELECT COUNT(0)
+        FROM `mybbs_bbs`.`articles`
+        WHERE `board_id` = #{boardId}
+          AND `title` LIKE CONCAT('%', #{title}, '%')
+    </select>
+
+    <select id="selectArticleCountLikeAll"
+            resultType="_int">
+        SELECT COUNT(0)
+        FROM `mybbs_bbs`.`articles`
+        WHERE `board_id` = #{boardId}
+          AND (`title` LIKE CONCAT('%', #{keyword}, '%')
+            OR `content` LIKE CONCAT('%', #{keyword}, '%'))
+    </select>
+
+    <select id="selectArticlesByUser"
+            resultType="dev.yblee.mybbs.dtos.BbsBoardSearchArticleDto">
+        SELECT `article`.`index`         AS `index`,
+               `article`.`user_nickname` AS `userNickname`,
+               `article`.`board_id`      AS `boardId`,
+               `article`.`written_at`    AS `writtenAt`,
+               `article`.`title`         AS `title`,
+               `article`.`view`          AS `view`,
+               `user`.`nickname`         AS `nickname`,
+               COUNT(`comment`.`index`)  AS `commentCount`
+        FROM `mybbs_bbs`.`articles` AS `article`
+                 LEFT JOIN `mybbs_member`.`users` AS `user` ON `article`.`user_nickname` = `user`.`nickname`
+                 LEFT JOIN `mybbs_bbs`.`comments` AS `comment` ON `article`.`index` = `comment`.`article_index`
+        WHERE `article`.`board_id` = #{boardId}
+          AND `user`.`nickname` LIKE CONCAT('%', #{userNickname}, '%')
+        GROUP BY `article`.`index`
+        ORDER BY `article`.`index` DESC
+        LIMIT #{count} OFFSET 0
+    </select>
+
+    <select id="selectArticlesLikeTitle"
+            resultType="dev.yblee.mybbs.dtos.BbsBoardSearchArticleDto">
+        SELECT `article`.`index`         AS `index`,
+               `article`.`user_nickname` AS `userNickname`,
+               `article`.`board_id`      AS `boardId`,
+               `article`.`written_at`    AS `writtenAt`,
+               `article`.`title`         AS `title`,
+               `article`.`view`          AS `view`,
+               `user`.`nickname`         AS `nickname`,
+               COUNT(`comment`.`index`)  AS `commentCount`
+        FROM `mybbs_bbs`.`articles` AS `article`
+                 LEFT JOIN `mybbs_member`.`users` AS `user` ON `article`.`user_nickname` = `user`.`nickname`
+                 LEFT JOIN `mybbs_bbs`.`comments` AS `comment` ON `article`.`index` = `comment`.`article_index`
+        WHERE `article`.`board_id` = #{boardId}
+          AND `article`.`title` LIKE CONCAT('%', #{title}, '%')
+        GROUP BY `article`.`index`
+        ORDER BY `article`.`index` DESC
+        LIMIT #{count} OFFSET 0
+    </select>
+
+    <select id="selectArticlesLikeAll"
+            resultType="dev.yblee.mybbs.dtos.BbsBoardSearchArticleDto">
+        SELECT `article`.`index`         AS `index`,
+               `article`.`user_nickname` AS `userNickname`,
+               `article`.`board_id`      AS `boardId`,
+               `article`.`written_at`    AS `writtenAt`,
+               `article`.`title`         AS `title`,
+               `article`.`view`          AS `view`,
+               `user`.`nickname`         AS `nickname`,
+               COUNT(`comment`.`index`)  AS `commentCount`
+        FROM `mybbs_bbs`.`articles` AS `article`
+                 LEFT JOIN `mybbs_member`.`users` AS `user` ON `article`.`user_nickname` = `user`.`nickname`
+                 LEFT JOIN `mybbs_bbs`.`comments` AS `comment` ON `article`.`index` = `comment`.`article_index`
+        WHERE `article`.`board_id` = #{boardId}
+            AND `article`.`title` LIKE CONCAT('%', #{keyword}, '%')
+           OR `article`.`content` LIKE CONCAT('%', #{keyword}, '%')
+        GROUP BY `article`.`index`
+        ORDER BY `article`.`index` DESC
+        LIMIT #{count} OFFSET 0
+    </select>
+
+    <select id="selectArticlesForBoardList"
+            resultType="dev.yblee.mybbs.dtos.BbsBoardListArticleDto">
+        SELECT `article`.`index`         AS `index`,
+               `article`.`user_nickname` AS `userNickname`,
+               `article`.`board_id`      AS `boardId`,
+               `article`.`written_at`    AS `writtenAt`,
+               `article`.`title`         AS `title`,
+               `article`.`view`          AS `view`,
+               `user`.`nickname`         AS `userNickname`,
+               COUNT(`comment`.`index`)  AS `commentCount`
+        FROM `mybbs_bbs`.`articles` AS `article`
+                 LEFT JOIN `mybbs_member`.`users` AS `user` ON `article`.`user_nickname` = `user`.`nickname`
+                 LEFT JOIN `mybbs_bbs`.`comments` AS `comment` ON `article`.`index` = `comment`.`article_index`
+        WHERE `board_id` = #{boardId}
+        GROUP BY `article`.`index`
+        ORDER BY `article`.`index` DESC
+        LIMIT #{count} OFFSET 0
+    </select>
+
+    <select id="selectBoardById"
+            resultType="dev.yblee.mybbs.entities.BbsBoardEntity">
+        SELECT `index` AS `index`,
+               `id`    AS `id`,
+               `name`  AS `name`
+        FROM `mybbs_bbs`.`boards`
+        WHERE `id` = #{id}
+        LIMIT 1
+    </select>
+
+    <select id="selectCommentsForArticleRead"
+            resultType="dev.yblee.mybbs.dtos.BbsArticleReadCommentDto">
+        SELECT `comment`.`index`         AS `index`,
+               `comment`.`user_nickname` AS `userNickname`,
+               `comment`.`article_index` AS `articleIndex`,
+               `comment`.`written_at`    AS `writtenAt`,
+               `comment`.`content`       AS `content`,
+               `user`.`nickname`         AS `userNickname`
+        FROM `mybbs_bbs`.`comments` AS `comment`
+                 LEFT JOIN `mybbs_member`.`users` AS `user` ON `comment`.`user_nickname` = `user`.`nickname`
+        WHERE `comment`.`article_index` = #{articleIndex}
+        ORDER BY `comment`.`index`
+    </select>
+
+    <insert id="insertWrite"
+            parameterType="dev.yblee.mybbs.entities.BbsArticleEntity">
+        INSERT INTO `mybbs_bbs`.`articles` (`user_nickname`, `board_id`, `title`, `content`)
+        VALUES (#{userNickname}, #{boardId}, #{title}, #{content})
+    </insert>
+
+    <insert id="insertComment"
+            parameterType="dev.yblee.mybbs.entities.BbsCommentEntity">
+        INSERT INTO `mybbs_bbs`.`comments` (`user_nickname`, `article_index`, `content`)
+        VALUES (#{userNickname}, #{articleIndex}, #{content})
+    </insert>
+
+    <delete id="deleteComment"
+            parameterType="dev.yblee.mybbs.entities.BbsCommentEntity">
+        DELETE
+        FROM `mybbs_bbs`.`comments`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </delete>
+
+    <select id="selectBoards"
+            resultType="dev.yblee.mybbs.entities.BbsBoardEntity">
+        SELECT `index` AS `index`,
+               `id`    AS `id`,
+               `name`  AS `name`
+        FROM `mybbs_bbs`.`boards`
+        ORDER BY `index`
+    </select>
+
+    <update id="updateView">
+        UPDATE `mybbs_bbs`.`articles`
+        SET `view` = `view` + 1
+        WHERE `index` = #{index}
+    </update>
+
+    <delete id="deleteArticle"
+            parameterType="dev.yblee.mybbs.entities.BbsArticleEntity">
+        DELETE
+        FROM `mybbs_bbs`.`articles`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </delete>
+
+    <update id="updateArticle"
+            parameterType="dev.yblee.mybbs.entities.BbsArticleEntity">
+        UPDATE `mybbs_bbs`.`articles`
+        SET `user_nickname` = #{userNickname},
+            `board_id`      = #{boardId},
+            `title`         = #{title},
+            `content`       = #{content}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+</mapper>

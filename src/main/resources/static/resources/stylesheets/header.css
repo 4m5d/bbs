@@ -1,10 +1,15 @@
+@charset "UTF-8";
+
 body > header {
     width: 100%;
     align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    position: absolute;
+    /*position: fixed;*/
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 body > header > .join {
@@ -29,90 +34,11 @@ body > header > .join > .list > .item + .item {
     margin-left: 1rem;
 }
 
-body > header > .search {
-    width: 60rem;
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 1rem;
+body > header > .logo-container {
+    margin-top: 1.5rem;
 }
 
-body > header > .search > .logo-container {
-    margin-bottom: 2rem;
-    margin-left: 2.8rem;
-}
-
-body > header > .search > .logo-container > .logo {
+body > header > .logo-container > .logo {
     width: 8rem;
     height: 7.5rem;
-}
-
-body > header > .search > .search-form {
-    left: 50%;
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    position: absolute;
-    transform: translateX(-50%);
-    margin: 1.6rem;
-}
-
-body > header > .search > .search-form > .search-standard {
-    align-items: stretch;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    margin-bottom: 0.75rem;
-    margin-right: 0.3rem;
-}
-
-body > header > .search > .search-form > .search-standard > .icon {
-    width: 3rem;
-    height: 2.75rem;
-    align-items: center;
-    color: var(--color-text);
-    font-size: 1.125rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-left: 3.2rem;
-}
-
-body > header > .search > .search-form > .search-standard > .search-criteria {
-    width: 8rem;
-    border: 0.125rem solid var(--color-border);
-    font-size: 1rem;
-    padding: 0.7rem 0.7rem 0.7rem 0.5rem;
-    color: var(--color-text);
-}
-
-body > header > .search > .search-form > .keyword-input-container {
-    align-items: stretch;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    margin-bottom: 0.75rem;
-}
-
-body > header > .search > .search-form > .keyword-input-container > .keyword-input {
-    width: 28rem;
-    border: 0.125rem solid var(--color-border);
-    font-size: 1rem;
-    padding: 0.7rem 3rem 0.7rem 1rem;
-    color: var(--color-text);
-}
-
-body > header > .search > .search-form > .search-button {
-    right: 1rem;
-    appearance: none;
-    background-color: unset;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 0.8rem;
-    padding: unset;
-    position: absolute;
-    font-weight: 700;
-    color: rgb(54, 59, 78);
 }

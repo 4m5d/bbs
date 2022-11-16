@@ -60,7 +60,6 @@ public class UserController {
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public ModelAndView postRegister(RegisterVo registerVo,
                                      ModelAndView modelAndView) {
-        registerVo.setAdmin(false);
         registerVo.setResult(null);
         this.userService.register(registerVo);
         modelAndView.addObject("registerVo", registerVo);

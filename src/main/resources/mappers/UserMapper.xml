@@ -5,9 +5,8 @@
 <mapper namespace="dev.yblee.mybbs.mappers.IUserMapper">
     <insert id="insert"
             parameterType="dev.yblee.mybbs.entities.UserEntity">
-        INSERT INTO `mybbs_member`.users(`email`, `password`, `nickname`, `deleted_flag`, `suspended_flag`,
-                                         `admin_flag`)
-        VALUES (#{email}, #{password}, #{nickname}, #{isDeleted}, #{isSuspended}, #{isAdmin})
+        INSERT INTO `mybbs_member`.users(`email`, `password`, `nickname`)
+        VALUES (#{email}, #{password}, #{nickname})
     </insert>
 
     <select id="selectUser"
@@ -15,10 +14,7 @@
             resultType="dev.yblee.mybbs.entities.UserEntity">
         SELECT `email`          AS `email`,
                `password`       AS `password`,
-               `nickname`       AS `nickname`,
-               `deleted_flag`   AS `isDeleted`,
-               `suspended_flag` AS `isSuspended`,
-               `admin_flag`     AS `isAdmin`
+               `nickname`       AS `nickname`
         FROM `mybbs_member`.`users`
         WHERE `email` = #{email}
           AND `password` = #{password}

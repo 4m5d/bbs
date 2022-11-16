@@ -1,0 +1,88 @@
+@charset "UTF-8";
+
+body {
+    overflow: hidden;
+}
+
+body > .main {
+    width: 50rem;
+    margin-left: 20%;
+    padding-top: 1.5rem;
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 81%;
+}
+
+body > .main > .label {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+body > .main > .label .category-select {
+    border: 0.0625rem solid var(--color-border);
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.3rem;
+    flex: 1;
+}
+
+body > .main > .label > .hint {
+    margin-right: 0.3rem;
+    font-weight: 700;
+}
+
+body > .main > .label > .input {
+    width: auto;
+    border: 0.0625rem solid var(--color-border);
+    border-radius: 0.25rem;
+    flex: 1;
+    padding: 0.5rem 0.3rem;
+}
+
+body > .main > .content {
+    resize: none;
+    height: 20rem;
+    padding: 0.5rem 0.3rem;
+}
+
+body > .main > .buttons {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+body > .main > .buttons > .button {
+    width: auto;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    padding: 0.75rem 1.25rem;
+}
+
+body > .main > .buttons > .button + .button {
+    margin-left: 0.5rem;
+}
+
+body > .main > .buttons > .button:hover {
+    filter: brightness(105%);
+}
+
+body > .main > .buttons > .button:active {
+    filter: brightness(95%);
+}
+
+body > .main > .buttons > .button.back {
+    border: 0.0625rem solid var(--color-border);
+    background-color: rgb(230, 230, 230);
+    color: var(--color-text);
+}
+
+body > .main > .buttons > .button.save {
+    background-color: rgb(66, 132, 243);
+    color: white;
+}

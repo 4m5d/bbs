@@ -30,9 +30,6 @@ public class UserService {
         loginVo.setEmail(userEntity.getEmail());
         loginVo.setPassword(userEntity.getPassword());
         loginVo.setNickname(userEntity.getNickname());
-        loginVo.setDeleted(userEntity.isDeleted());
-        loginVo.setSuspended(userEntity.isSuspended());
-        loginVo.setAdmin(userEntity.isAdmin());
         // 로그인 성공
         loginVo.setResult(LoginResult.SUCCESS);
     }

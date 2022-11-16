@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 작성</title>
+    <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+    <link th:href="@{/bbs/stylesheets/write.css}" rel="stylesheet">
+    <script th:if="${bbsWriteVo != null && bbsWriteVo.getResult().name().equals('FAILURE')}">
+        alert('알 수 없는 이유로 게시글 저장에 실패하였습니다.');
+        window.history.back();
+    </script>
+    <script th:if="${session.userEntity == null}">
+        alert('로그인 후 이용해주세요.');
+        location.href = "/user/login";
+    </script>
+</head>
+<body>
+<form class="main" method="post">
+    <label class="label">
+        <span class="hint">카테고리</span>
+        <select class="category-select" name="boardId">
+            <option th:each="board : ${bbsBoardEntities}"
+            th:text="${board.getName()}"
+            th:value="${board.getId()}"
+            th:selected="${board.getIndex() == 1}"></option>
+        </select>
+    </label>
+    <label class="label">
+        <span class="hint">제목</span>
+        <input class="input" name="title" maxlength="100" type="text" placeholder="제목을 입력해주세요.">
+    </label>
+    <textarea class="content" name="content" id="content" placeholder="내용을 입력해주세요."></textarea>
+    <div class="buttons">
+        <input class="button back" type="button" value="돌아가기" onclick="if(confirm('정말로 돌아갈까요? 돌아가면 작성하신 내용이 저장되지 않습니다.')) {window.history.back();}">
+        <input class="button save" type="submit" value="저장하기">
+    </div>
+</form>
+<th:block th:replace="~{fragments/footer.html :: footer}"></th:block>
+</body>
+</html>
